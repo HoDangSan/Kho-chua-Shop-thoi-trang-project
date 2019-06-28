@@ -37,69 +37,89 @@
                     <h3 class="title">Shopping Cart</h3>
                     <div class="clearfix">
                     </div>
-                    <table class="shop-table">
-                        <thead>
-                        <tr>
-                            <th>Hình ảnh</th>
-                            <th>Thông tin</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                            <th>Xóa</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <img src="${pageContext.request.contextPath}/Content/images/products/small/products-06.png" alt="">
-                            </td>
-                            <td>
-                                <div class="shop-details">
-                                    <div class="productname">Tên Sản Phẩm</div>
-                                    <p>
-                                        Product Code :<strong class="pcode">Dress 120</strong>
-                                    </p>
-                                </div>
-                            </td>
-                            <td>
-                                <h5>$200.00</h5>
-                            </td>
-                            <td>
-                                <select name="">
-                                    <option selected value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                </select>
-                            </td>
-                            <td>
-                                <h5><strong class="red">$200.00</strong></h5>
-                            </td>
-                            <td>
-                                <a href="#"><img src="${pageContext.request.contextPath}/Content/images/remove.png" alt=""></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <button class=" pull-right"><a href="#">Quay lại lướt shop</a></button>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <!-- Contact -->
-                    <div class="checkout-page">
-                        <ol class="checkout-steps">
-                            <li class="steps active">
-                                <a class="step-title">Điền Thông tin liên hệ</a>
-                                <div class="step-description">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="run-customer">
-                                                <h5>Thông tin liên hệ</h5>
-                                                <form>
+                    <form action="cartShop">
+                        <table class="shop-table">
+                            <thead>
+                            <tr>
+                                <th>Hình ảnh</th>
+                                <th>Thông tin</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th>Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items='${requestScope["newShowCart"]}' var="sanpham">
+                                <tr>
+                                    <td>
+                                        <img src="${pageContext.request.contextPath}/Content/images/products/${sanpham.getHinhanh()}"
+                                             alt="">
+                                    </td>
+                                    <td>
+                                        <div class="shop-details">
+                                            <div class="productname">${sanpham.getTensp()}</div>
+                                            <p>
+                                                Product Code :<strong class="pcode">Dress 120</strong>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 id="giasp${sanpham.getId()}">${sanpham.getGia()}</h5>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" name="soluongcart" id="soluongcart" value="1"
+                                               placeholder="Số lượng"
+                                               oninput="tongtien(this.value)">
+                                    </td>
+
+                                    <td>
+                                        <h5><a class="red" id="tongtiensp${sanpham.getId()}">${sanpham.getGia()}</a>
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        <a href="/cart"><img
+                                                src="${pageContext.request.contextPath}/Content/images/remove.png"
+                                                alt=""></a>
+                                    </td>
+                                    <script>
+                                        function tongtien(value) {
+                                            value = parseInt(value);
+                                            var getTongtienInput = parseInt(document.getElementById("giasp${sanpham.getId()}").value);
+                                            document.getElementById("tongtiensp${sanpham.getId()}").innerHTML =
+                                            ${sanpham.getGia()} *
+                                            value;
+                                        }
+                                    </script>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <button class=" pull-right"><a href="/homes">Tiếp tục mua sắm</a></button>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <!-- Contact -->
+                        <div class="col-lg-6">
+                            <div class="checkout-page">
+                                <ol class="checkout-steps">
+                                    <li class="steps active">
+                                        <a class="step-title">Điền Thông tin liên hệ</a>
+                                        <div class="step-description">
+                                            <div class="row">
+                                                <div class="run-customer">
+                                                    <h5>Thông tin liên hệ</h5>
                                                     <div class="form-row">
                                                         <label class="lebel-abs">Tên<strong
+                                                                class="red">*</strong></label>
+                                                        <input type="text" class="input namefild" name="">
+                                                    </div>
+                                                    <div class="form-row"><label class="lebel-abs">Số điện
+                                                        thoại<strong
                                                                 class="red">*</strong></label>
                                                         <input type="text" class="input namefild" name="">
                                                     </div>
@@ -107,19 +127,44 @@
                                                             class="red">*</strong></label>
                                                         <input type="text" class="input namefild" name="">
                                                     </div>
-                                                    <div class="form-row"><label class="lebel-abs">Số điện thoại<strong
+                                                    <div class="form-row"><label class="lebel-abs">Ghi chú<strong
                                                             class="red">*</strong></label>
-                                                        <input type="text" class="input namefild" name="">
+                                                        <textarea type="text" class="input namefild" name="message"
+                                                                  rows="5" cols="72"></textarea>
                                                     </div>
-                                                    <input type="submit" value="Login">
-                                                </form>
+                                                    <button class="btn-cart btn-success" type="submit">
+                                                        Đăng nhập
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="checkout-page">
+                                <ol class="checkout-steps">
+                                    <li class="steps active">
+                                        <a class="step-title">Bản Thanh Toán</a>
+                                        <div class="step-description">
+                                            <div class="row">
+                                                <div class="run-customer">
+                                                    <h5>Xin cảm ơn hẹn gặp lại!</h5>
+                                                    <b>
+                                                        <h3>Thuế VAT: </h3><br>
+                                                        <h3>Tổng Tiền:</h3>
+                                                    </b>
+                                                    <div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </form>
                     <!--End Contact -->
                 </div>
             </div>
