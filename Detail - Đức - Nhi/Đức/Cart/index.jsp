@@ -139,9 +139,15 @@
                                             <div class="row">
                                                 <div><img style="margin-top: -22px;" src="${pageContext.request.contextPath}/Content/images/bghoadon.jpg"></div>
                                                 <div class="run-customer" style="margin-top: 10px;">
-                                                    <div style="font-size: 22px;">Tổng tiền&ensp;: <span style="color:red;"> ${requestScope["hoadonView"].get("tongtien")} <sup style="font-size: 20px;">đ</sup> </span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
-                                                    <div style="font-size: 22px;">Thuế VAT&ensp;: <span style="color:red;"> ${requestScope["hoadonView"].get("vat")}<sup style="font-size: 20px">đ</sup></span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
-                                                    <div style="font-size: 22px;">Thành tiền: <span style="color:red;"> ${requestScope["hoadonView"].get("thanhtien")}<sup style="font-size: 20px">đ</sup></span></div>
+                                                    <div style="font-size: 22px;">Tổng tiền&ensp;: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                               maxFractionDigits="3"
+                                                                                                                                               value='${requestScope["hoadonView"].get("tongtien")}'/> <sup style="font-size: 20px;">VNĐ</sup> </span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
+                                                    <div style="font-size: 22px;">Thuế VAT&ensp;: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                              maxFractionDigits="3"
+                                                                                                                                              value="${requestScope['hoadonView'].get('vat')}"/><sup style="font-size: 20px">VNĐ</sup></span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
+                                                    <div style="font-size: 22px;">Thành tiền: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                          maxFractionDigits="3"
+                                                                                                                                          value="${requestScope['hoadonView'].get('thanhtien')}"/><sup style="font-size: 20px">VNĐ</sup></span></div>
                                                 </div>
                                                 <button class="btn-cart btn-success" style="margin-top: 22px;float: right;"
                                                         type="submit">
