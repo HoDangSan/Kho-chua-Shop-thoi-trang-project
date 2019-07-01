@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.text.DecimalFormat" %><%--
   Created by IntelliJ IDEA.
   User: SanArima
   Date: 24-Jun-19
@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
                                                         ${sanpham.getTensp()}
                                                 </div>
                                                 <h4 class="price">
-                                                    $${sanpham.getGia()}
+                                                    <fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${sanpham.getGia()}" /> VNĐ
                                                 </h4>
                                                 <div class="button_group">
                                                     <a href="/homes?action=addtocartInHome&id=${sanpham.getId()}">

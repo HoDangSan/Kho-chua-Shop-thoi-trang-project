@@ -54,7 +54,7 @@ public class ChiTietHoaDon extends DBConnection {
     }
 
     public boolean createChiTietHoaDon(ChiTietHoaDon newChiTietHoaDon) throws SQLException {
-        String sql = "INSERT INTO ChiTietHoaDon (id_hoadon,id_sanpham,soluong,gia) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO ChiTietHoaDon (id_hoadon,id_sanpham,soluong,gia) VALUES (?,?,?,?)";
 
         DBConnection db = new DBConnection();
         Connection conn = db.getConnection();

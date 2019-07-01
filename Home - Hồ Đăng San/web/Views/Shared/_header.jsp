@@ -31,7 +31,7 @@
                     <ul class="option">
                         <li id="search" class="search">
                             <form method="post" action="/homes?action=search">
-                                <input class="search-input-detail" type="text" name="search" placeholder="Enter your search term...">
+                                <input class="search-input-detail" type="text" name="search" placeholder="Nhập sản phẩm cần tìm kiếm...">
                                 <input class="search-detail" type="submit" value="">
                             </form>
                         </li>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li style="top:15px;"><a class="active" href="/homes">HOME</a></li>
+                            <li style="top:15px;"><a class="active" href="/homes">TRANG CHỦ</a></li>
                         </ul>
                     </div>
                 </div>

@@ -140,13 +140,16 @@ public class HomeServlet extends HttpServlet {
                 count++;
             }
         }
-        if(count == 0) listSessionSanpham.add(sanpham);
+        if(count == 0) {
+            sanpham.setSoluongtronggio(sanpham.getSoluongtronggio() + 1);
+            listSessionSanpham.add(sanpham);
+        }
 
         List<SanPham> dssanpham = this.sanPhamDAO.getAllProduct();
         request.setAttribute("dssanpham", dssanpham);
 
         // Tính độ dài giỏ khi đc thêm vào
-        int lengthListSessonSanpham = listSessionSanpham.size() + count;
+        int lengthListSessonSanpham = (int) session.getAttribute("lengthListSessonSanpham") + 1;
         // Gửi về trang detail số lượng san phẩm trong giỏ hàng và set lại giỏ hàng
         session.setAttribute("lengthListSessonSanpham", lengthListSessonSanpham);
         session.setAttribute("listSessionCartSanpham", listSessionSanpham);
@@ -177,8 +180,10 @@ public class HomeServlet extends HttpServlet {
             if(sanpham.getId() == listSessionSanpham.get(i).getId()){
                 listSessionSanpham.get(i).setSoluongtronggio(listSessionSanpham.get(i).getSoluongtronggio() + amont);
                 count++;
+                listSessionSanpham.get(i).getSoluongtronggio();
             }
         }
+
         if(count == 0){
             listSessionSanpham.add(sanpham);
             for (int i = 0; i < listSessionSanpham.size() ; i++){
@@ -190,7 +195,7 @@ public class HomeServlet extends HttpServlet {
         // Thêm sản phẩm mới vào giỏ hàng mới cùng với giở hàng cũ
 
         // Tính độ dài giỏ khi đc thêm vào
-        int lengthListSessonSanpham = listSessionSanpham.size() + amont;
+        int lengthListSessonSanpham = (int) session.getAttribute("lengthListSessonSanpham") + amont;
 
         // Gửi về trang detail số lượng san phẩm trong giỏ hàng và set lại giỏ hàng
         session.setAttribute("lengthListSessonSanpham", lengthListSessonSanpham);

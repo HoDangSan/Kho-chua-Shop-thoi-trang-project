@@ -2,10 +2,7 @@ package com.c0419h1_nhom1.shopthoitrang.entity;
 
 import com.c0419h1_nhom1.shopthoitrang.jdbc.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class HoaDon extends DBConnection {
     private int id;
@@ -108,7 +105,7 @@ public class HoaDon extends DBConnection {
         }
         statement.setString(1, newHoaDon.getNgayban());
         statement.setInt(2, newHoaDon.getId_khachhang());
-        statement.setInt(3, newHoaDon.getId_nhanvien());
+        statement.setInt(3, 1);
         statement.setDouble(4, newHoaDon.getTongtien());
         statement.setDouble(5, newHoaDon.getVat());
         statement.setDouble(6, newHoaDon.getThanhtien());
@@ -123,30 +120,25 @@ public class HoaDon extends DBConnection {
         }
         return rowInserted;
     }
-    public int getidhoadon(HoaDon hoaDon) throws SQLException {
-        String sql = "SELECT * FROM hoadon WHERE id_khachhang = ? and tongtien = ? and vat = ? and thanhtien = ?";
-
+    public int getidhoadon() throws SQLException {
+        String sql = "SELECT * FROM hoadon ORDER BY id DESC LIMIT 1";
         //Lấy chuỗi kết nối tới CSDL truyền vào biến conn
         DBConnection db = new DBConnection();
         Connection conn = db.getConnection();
 
-        PreparedStatement statement = null;
+        //Tạo đường dẫn kết nối tới CSDL
+        Statement statement = null;
         try {
-            statement = conn.prepareStatement(sql);
+            statement = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        statement.setInt(1, hoaDon.getId_khachhang());
-        statement.setDouble(2, hoaDon.getTongtien());
-        statement.setDouble(3,hoaDon.getVat());
-        statement.setDouble(4,hoaDon.getThanhtien());
-
-        ResultSet resultSet = statement.executeQuery();
-
+        ResultSet resultSet = statement.executeQuery(sql);
+        int id = 0;
         if (resultSet.next()) {
 
-            int id = resultSet.getInt("id");
+            id = resultSet.getInt("id");
         }
         resultSet.close();
         statement.close();

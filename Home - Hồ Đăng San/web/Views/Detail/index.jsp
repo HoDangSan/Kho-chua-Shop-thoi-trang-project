@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html>
 
@@ -38,7 +40,8 @@
                                 </a>
                             </div>
                         </div>
-                        <form action="/homes?action=addtocartInDetail&id=${sanpham.getId()}" method="post">
+                        <form id="formDetail" action="/homes?action=addtocartInDetail&id=${sanpham.getId()}"
+                              method="post">
                             <div class="products-description">
                                 <h5 class="name" style="font-size: 25px;">
                                     ${sanpham.getTensp()}
@@ -53,17 +56,19 @@
                                 <hr class="border">
                                 <div class="price">
                                     Giá :
-                                    <span class="new_price" style="margin-left: 10px;">${sanpham.getGia()}<sup>VND</sup></span>
+                                    <span class="new_price" style="margin-left: 10px;"><fmt:formatNumber type="number"
+                                                                                                         maxFractionDigits="3"
+                                                                                                         value="${sanpham.getGia()}"/> VNĐ</span>
                                 </div>
                                 <hr class="border">
                                 <div class="wided">
                                     <div class="qty">
-                                        Số lượng &nbsp;&nbsp;: <input type="number" name="soluong" id="soluong"
-                                                                      value="1">
+                                        Số lượng &nbsp;&nbsp;: <input type="number" min="1" name="soluong" id="soluong"
+                                                                      value="1" style="width: 100px;" required>
                                     </div>
                                     <div class="button_group">
                                         <a href="/homes">
-                                            <button class="button"><i class="fa fa-exchange"></i></button>
+                                            <button class="button" type="button"><i class="fa fa-exchange"></i></button>
                                         </a>
                                         <button type="submit" class="btn-cart btn-success">+ Giỏ Hàng</button>
                                         <a href="/cart">

@@ -25,7 +25,8 @@
       out.print("connection success! <br><br>");
 
       List<SanPham> listSessionCartSanpham = new ArrayList<>();
-
+      int lengthListSessonSanpham = 0;
+      session.setAttribute("lengthListSessonSanpham", lengthListSessonSanpham);
       session.setAttribute("listSessionCartSanpham", listSessionCartSanpham);
 
       out.print("<a href='/homes'>Home<a>");

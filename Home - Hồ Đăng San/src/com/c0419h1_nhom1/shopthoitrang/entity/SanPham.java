@@ -4,8 +4,10 @@ import com.c0419h1_nhom1.shopthoitrang.jdbc.DBConnection;
 
 import java.io.PrintWriter;
 import java.sql.*;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SanPham {
     private int id;
@@ -19,8 +21,8 @@ public class SanPham {
     private int idKieu;
     private int idNhasanxuat;
     private String hinhanh;
-    private int soluongtronggio = 1;
-    private double tonggia = gia * soluongtronggio;
+    private int soluongtronggio = 0;
+    private double tonggia = 0;
 
 
     public SanPham() {
@@ -216,7 +218,7 @@ public class SanPham {
                 int id = resultSet.getInt("id");
                 String tensp = resultSet.getString("tensp");
                 String mieuta = resultSet.getString("mieuta");
-                int gia = resultSet.getInt("gia");
+                double gia = resultSet.getDouble("gia");
                 int soluong = resultSet.getInt("soluong");
                 int gianhap = resultSet.getInt("gianhap");
                 String ngaynhap = resultSet.getString("ngaynhap");

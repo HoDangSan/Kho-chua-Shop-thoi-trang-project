@@ -2,10 +2,7 @@ package com.c0419h1_nhom1.shopthoitrang.entity;
 
 import com.c0419h1_nhom1.shopthoitrang.jdbc.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Khachhang extends DBConnection {
     private int id;
@@ -104,29 +101,26 @@ public class Khachhang extends DBConnection {
         return rowInserted;
     }
 
-    public int getidkhachhang(Khachhang khachhang) throws SQLException {
-        String sql = "SELECT * FROM khachhang WHERE ten = ? and sodienthoai = ? and diachi = ?";
-
+    public int getidkhachhang() throws SQLException {
         //Lấy chuỗi kết nối tới CSDL truyền vào biến conn
         DBConnection db = new DBConnection();
         Connection conn = db.getConnection();
 
-        PreparedStatement statement = null;
+        //Tạo đường dẫn kết nối tới CSDL
+        Statement statement = null;
         try {
-            statement = conn.prepareStatement(sql);
+            statement = conn.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        statement.setString(1, khachhang.getTen());
-        statement.setString(2,khachhang.getSodienthoai());
-        statement.setString(3,khachhang.getDiachi());
+        String sql = "SELECT id, ten, sodienthoai, diachi, ghichu FROM khachhang ORDER BY id DESC LIMIT 1";
 
-        ResultSet resultSet = statement.executeQuery();
-
+        ResultSet resultSet = statement.executeQuery(sql);
+        int id = 0;
         if (resultSet.next()) {
 
-            int id = resultSet.getInt("id");
+            id = resultSet.getInt("id");
         }
         resultSet.close();
         statement.close();

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@
                     <h3 class="title">Shopping Cart</h3>
                     <div class="clearfix">
                     </div>
-                    <form action="cartShop">
+                    <form id="formThanhToan" action="/cart?action=thanhtoan" method="post">
                         <table class="shop-table">
                             <thead>
                             <tr>
@@ -50,7 +51,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items='${requestScope["newShowCart"]}' var="sanpham">
+                            <c:forEach items='${requestScope["listSessionSanpham"]}' var="sanpham">
                                 <tr>
                                     <td>
                                         <img src="${pageContext.request.contextPath}/Content/images/products/${sanpham.getHinhanh()}"
@@ -65,22 +66,24 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 id="giasp${sanpham.getId()}">${sanpham.getGia()}</h5>
+                                        <h5><fmt:formatNumber type="number" maxFractionDigits="3"
+                                                                                    value="${sanpham.getGia()}"/>
+                                            VNĐ</h5>
                                     </td>
 
                                     <td>
-                                        <input type="number" name="soluongcart" id="soluongcart"
-                                               value="${sanpham.getSoluongtronggio()}"
-                                               placeholder="Số lượng"
-                                        >
+                                            ${sanpham.getSoluongtronggio()}
                                     </td>
 
                                     <td>
-                                        <h5><a class="red">${sanpham.getTonggia()}</a>
+                                        <h5><a class="red"><fmt:formatNumber type="number"
+                                                                                                   maxFractionDigits="3"
+                                                                                                   value="${sanpham.getTonggia()}"/>
+                                            VNĐ</a>
                                         </h5>
                                     </td>
                                     <td>
-                                        <a href="/cart"><img
+                                        <a href="/cart?action=remove&id=${sanpham.getId()}"><img
                                                 src="${pageContext.request.contextPath}/Content/images/remove.png"
                                                 alt=""></a>
                                     </td>
@@ -108,20 +111,23 @@
                                                     <div class="form-row">
                                                         <label class="lebel-abs">Tên<strong
                                                                 class="red">*</strong></label>
-                                                        <input type="text" class="input namefild" name="">
+                                                        <input type="text" class="input namefild" name="tenkh"
+                                                               placeholder="Vui lòng nhập tên" required>
                                                     </div>
                                                     <div class="form-row"><label class="lebel-abs">Số điện
                                                         thoại<strong
                                                                 class="red">*</strong></label>
-                                                        <input type="text" class="input namefild" name="">
+                                                        <input type="text" class="input namefild" name="sodienthoaikh"
+                                                               placeholder="Vui lòng nhập số điện thoại" required>
                                                     </div>
                                                     <div class="form-row"><label class="lebel-abs">Địa chỉ<strong
                                                             class="red">*</strong></label>
-                                                        <input type="text" class="input namefild" name="">
+                                                        <input type="text" class="input namefild" name="diachi"
+                                                               placeholder="Vui lòng nhập địa chỉ" required>
                                                     </div>
                                                     <div class="form-row"><label class="lebel-abs">Ghi chú<strong
                                                             class="red">*</strong></label>
-                                                        <textarea type="text" class="input namefild" name="message"
+                                                        <textarea type="text" class="input namefild" name="ghichu"
                                                                   rows="5" cols="72"></textarea>
                                                     </div>
                                                 </div>
@@ -136,18 +142,22 @@
                                 <ol class="checkout-steps">
                                     <li class="steps active">
                                         <a class="step-title">Bản Thanh Toán</a>
-                                        <div class="step-description">
+                                        <div class="step-description" style="padding-bottom: 6px;">
                                             <div class="row">
-                                                <div class="run-customer" style="margin-top: 158px;">
-                                                    <h5>Xin cảm ơn hẹn gặp lại!</h5>
-                                                    <b>
-                                                        <h3>Thuế VAT: </h3><br>
-                                                        <h3>Tổng Tiền:</h3>
-                                                    </b>
-                                                    <div>
-                                                    </div>
+                                                <div><img style="margin-top: -22px;" src="${pageContext.request.contextPath}/Content/images/bghoadon.jpg"></div>
+                                                <div class="run-customer" style="margin-top: 10px;">
+                                                    <div style="font-size: 22px;">Tổng tiền&ensp;: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                               maxFractionDigits="3"
+                                                                                                                                               value='${requestScope["hoadonView"].get("tongtien")}'/> VNĐ </span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
+                                                    <div style="font-size: 22px;">Thuế VAT&ensp;: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                              maxFractionDigits="3"
+                                                                                                                                              value="${requestScope['hoadonView'].get('vat')}"/> VNĐ</span></div><hr style="margin-top: 15px;margin-bottom: 10px;">
+                                                    <div style="font-size: 22px;">Thành tiền: <span style="color:red;"> <fmt:formatNumber type="number"
+                                                                                                                                          maxFractionDigits="3"
+                                                                                                                                          value="${requestScope['hoadonView'].get('thanhtien')}"/> VNĐ</span></div>
                                                 </div>
-                                                <button class="btn-cart btn-success" style="margin-top: 20px" type="submit">
+                                                <button class="btn-cart btn-success" style="margin-top: 22px;float: right;"
+                                                        type="submit">
                                                     Thanh Toán
                                                 </button>
                                             </div>
@@ -170,9 +180,40 @@
     <jsp:include page="../Shared/_footer.jsp"></jsp:include>
     <!--    footer-->
 </div>
-<!-- Bootstrap core JavaScript===============================================-->
-<!--linkjs-->
-<!--linkjs-->
+<script>
+    $(document).ready(function () {
+        $("#formThanhToan").validate({
+            rules: {
+                tenkh: {
+                    required: true,
+                },
+                sodienthoaikh: {
+                    required: true,
+                    minlength: 5,
+                    maxlength:11,
+                },
+                diachi: {
+                    required: true,
+                    minlength: 2,
+                }
+            },
+            messages: {
+                tenkh: {
+                    required: "Không được để trống",
+                },
+                sodienthoaikh:{
+                    required: "Không được để trống",
+                    minlength: "Số máy quý khách vừa nhập là số không có thực",
+                    maxlength: "Số máy quý khách vừa nhập là số không có thực"
+                },
+                diachi: {
+                    required: "Không được để trống",
+                    minlength: "Địa chỉ quá ngắn"
+                }
+            }
+        })
+    });
+</script>
 </body>
 
 </html>
